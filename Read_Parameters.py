@@ -41,14 +41,11 @@ def readQuery(SQL, fullPath):
 
 
 working_folder = os.getcwd()
-use_accumulation = True
-mu_path = r"J:\SEWER_AREA_MODELS\LISA\01_MASTER_MODEL\Lisa_Base.sqlite"
+use_accumulation = False
+mu_path = r"J:\SEWER_AREA_MODELS\VSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_249\Calibration_Specs\VSA_BASE_MODEL_2015_V294.mdb"
 
 
 def main(working_folder,mu_path,use_accumulation):
-
-    print use_accumulation
-
 
     wwf_columns = ['Location','Imp. cal. factor ICF', 'Imp. san. factor ISF', 'Length factor LF', \
            'Slope factor SF', 'RDII Factor RF', 'Umax (mm)', 'Lmax (mm)', \
@@ -70,7 +67,9 @@ def main(working_folder,mu_path,use_accumulation):
            'Industrial_Area', 'Institutional_Area', 'Mixed_WaterLoad',\
            'ResHD_WaterLoad', 'ResLD_WaterLoad', 'Commercial_WaterLoad',\
            'Industrial_WaterLoad', 'Institutional_WaterLoad', 'Baseflow_WaterLoad',\
-           'Total_WaterLoad', 'Mixed_Population_Upstream',\
+           'Total_WaterLoad']
+    if use_accumulation == True:
+        dwf_columns += ['Mixed_Population_Upstream',\
            'ResHD_Population_Upstream', 'ResLD_Population_Upstream',\
            'Commercial_Area_Upstream', 'Industrial_Area_Upstream',\
            'Institutional_Area_Upstream', 'Mixed_WaterLoad_Upstream',\

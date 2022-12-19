@@ -41,11 +41,14 @@ def readQuery(SQL, fullPath):
 
 
 working_folder = os.getcwd()
-use_accumulation = False
-mu_path = r"J:\SEWER_AREA_MODELS\VSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_249\Calibration_Specs\VSA_BASE_MODEL_2015_V294.mdb"
+use_accumulation = True
+mu_path = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL\FSA_Base_2021pop_New_Zones.mdb"
 
 
 def main(working_folder,mu_path,use_accumulation):
+##if 1 == 1:
+
+    print 'use_accumulation: ' + str(use_accumulation)
 
     wwf_columns = ['Location','Imp. cal. factor ICF', 'Imp. san. factor ISF', 'Length factor LF', \
            'Slope factor SF', 'RDII Factor RF', 'Umax (mm)', 'Lmax (mm)', \
@@ -68,7 +71,8 @@ def main(working_folder,mu_path,use_accumulation):
            'ResHD_WaterLoad', 'ResLD_WaterLoad', 'Commercial_WaterLoad',\
            'Industrial_WaterLoad', 'Institutional_WaterLoad', 'Baseflow_WaterLoad',\
            'Total_WaterLoad']
-    if use_accumulation == True:
+    if use_accumulation == True or use_accumulation == 'True': #Bat file seems to parse it in as string
+        print 'Yes we append acc!'
         dwf_columns += ['Mixed_Population_Upstream',\
            'ResHD_Population_Upstream', 'ResLD_Population_Upstream',\
            'Commercial_Area_Upstream', 'Industrial_Area_Upstream',\
@@ -241,7 +245,7 @@ def main(working_folder,mu_path,use_accumulation):
         sql = "SELECT LoadLocation, SUM (loadflow)*100000 AS Total FROM msm_LoadPoint GROUP BY LoadLocation"
         sqls.append([sql,'WaterLoad'])
 
-    if use_accumulation == True or use_accumulation == 'True': #Bat file seems to parse it in as string/
+    if use_accumulation == True or use_accumulation == 'True': #Bat file seems to parse it in as string
 
         if '.mdb' in mu_path:
             sql = "TRANSFORM Sum(ms_LALoadAlloc.Population) AS SumOfPopulation "
@@ -353,10 +357,11 @@ def main(working_folder,mu_path,use_accumulation):
     for dwf_column in dwf_columns:
         dwf_column_lower = dwf_column.lower()
         dwf_df_all.rename(columns={dwf_column_lower:dwf_column},inplace=True)
+        print dwf_column
 
     a = list(dwf_df_all.columns)
 
-    pass
+
 
 
 
@@ -364,6 +369,7 @@ def main(working_folder,mu_path,use_accumulation):
     dwf_df_all.to_csv(working_folder + '\\DWF_Specs.csv',index=False)
 
 if __name__ == "__main__":
+    print sys.argv[3]
     main(sys.argv[1],sys.argv[2],sys.argv[3])
 
 

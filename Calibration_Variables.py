@@ -1,3 +1,7 @@
+##AFTER UPDATE AND SAVE YOU MUST RESTART THE KERNEL IN JUPYTER NOTEBOOK TO UPDATE VARIABLES!
+
+##Remember to insert r in front of all paths, e.g. r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL"
+
 model_area = "FSA"
 generate_confidence_csvs = False
 map_point_spacing = 100
@@ -8,7 +12,7 @@ model_area_strict_match = True #If True, accept 'VSA' but not 'VSA-2019'. If Fal
 #CHANGE THE BELOW PATHS TO YOUR C DRIVE
 output_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43"
 result_folder = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL"
-calibration_sheet = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Calibration_Specs\Calibration_Specifications.xlsx"
+calibration_sheet = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Calibration_Specs\Calibration_Specifications_Temp_Copy.xlsx"
 model = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL\FSA_Base_2021pop_New_Zones.mdb"
 
 #DO NOT CHANGE THE PATHS BELOW

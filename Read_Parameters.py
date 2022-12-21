@@ -46,7 +46,7 @@ mu_path = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL\F
 
 
 def main(working_folder,mu_path,use_accumulation):
-##if 1 == 1:
+##if 1 == 1: #For debugging in idle/pyscripter uncomment this line and comment the above.
 
     print 'use_accumulation: ' + str(use_accumulation)
 
@@ -361,12 +361,23 @@ def main(working_folder,mu_path,use_accumulation):
 
     a = list(dwf_df_all.columns)
 
-
-
-
-
     dwf_df_all = dwf_df_all[dwf_columns]
     dwf_df_all.to_csv(working_folder + '\\DWF_Specs.csv',index=False)
+
+
+    if '.mdb' in mu_path:
+        sql = "SELECT ms_LALoadAlloc.LoadLocation, ms_DPProfileD.PatternID, ms_DPProfileD.ScheduleID, ms_DPPatternD.Sqn, ms_DPPatternD.DPValue "
+        sql += "FROM ms_LALoadAlloc INNER JOIN ((msm_BItem INNER JOIN ms_DPProfileD ON msm_BItem.DPProfileID = ms_DPProfileD.ProfileID)  "
+        sql += "INNER JOIN ms_DPPatternD ON ms_DPProfileD.PatternID = ms_DPPatternD.PatternID) ON ms_LALoadAlloc.LoadSubCategory = msm_BItem.MUID "
+        sql += "GROUP BY ms_LALoadAlloc.LoadLocation, ms_DPProfileD.PatternID, ms_DPProfileD.ScheduleID, ms_DPPatternD.Sqn, ms_DPPatternD.DPValue "
+        sql += "HAVING ms_DPProfileD.PatternID<>'Baseflow'"
+
+    diurnals = readQuery(sql,mu_path)[1]
+    diurnals = pd.DataFrame(diurnals,columns=['Zone','Profile','Schedule','Sqn','Multiplier'])
+    diurnals.to_csv(working_folder + '\\Diurnals.csv',index=False)
+
+
+
 
 if __name__ == "__main__":
     print sys.argv[3]

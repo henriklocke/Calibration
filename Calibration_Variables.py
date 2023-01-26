@@ -10,21 +10,21 @@ slope_source_unit_meter_per_meter = True #This is the case for NSSA and FSA, in 
 model_area_strict_match = True #If True, accept 'VSA' but not 'VSA-2019'. If False, accept both.
 
 #Leave as empty list [] if all zones to be plotted 
-zone_filter = ['FST6','NW25','Royal_Avenue_PS'] #Set to Yao's zones, all others please adjust to your areas.
+zone_filter = ['FST6','NW25','Royal_Avenue_PS'] #Please adjust to the zones you want to run
 
 #CHANGE THE BELOW PATHS TO YOUR C DRIVE
-output_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43"
+output_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_44"
 result_folder = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL"
-calibration_sheet = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Calibration_Specs\Calibration_Specifications.xlsx"
+calibration_sheet = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_44\FSA_Calibration_Specs\Calibration_Specifications.xlsx"
 model = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL\FSA_Base_2021pop_New_Zones.mdb"
 
 #DO NOT CHANGE THE PATHS BELOW
-summation_csv = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Calibration_Specs\Summation.csv"
-node_csv = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Calibration_Specs\MH_Zones.csv"
-outfall_csv = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Calibration_Specs\Outfall_Summary.csv"
+summation_csv = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_44\FSA_Calibration_Specs\Summation.csv"
+node_csv = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_44\FSA_Calibration_Specs\MH_Zones.csv"
+outfall_csv = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_44\FSA_Calibration_Specs\Outfall_Summary.csv"
 
 rainfall_dfs0_file = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\DATA\RAINFALL\FSA_Rainfall_Data_PDT.dfs0"
-map_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43\FSA_Report_Maps"
+map_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_44\FSA_Report_Maps"
 dfs0_folders = []
 dfs0_folders.append(r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\04_DATA\11.Dfs0\Non-PS")
 dfs0_folders.append(r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\04_DATA\11.Dfs0\PS")

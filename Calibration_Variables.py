@@ -8,7 +8,9 @@ map_point_spacing = 100
 use_accumulation = True
 slope_source_unit_meter_per_meter = True #This is the case for NSSA and FSA, in VSA it is per thousand
 model_area_strict_match = True #If True, accept 'VSA' but not 'VSA-2019'. If False, accept both.
-zone_filter = ['AL1','BN17'] #Leave as empty list [] if all zones to be plotted 
+
+#Leave as empty list [] if all zones to be plotted 
+zone_filter = ['FST6','NW25','Royal_Avenue_PS'] #Set to Yao's zones, all others please adjust to your areas.
 
 #CHANGE THE BELOW PATHS TO YOUR C DRIVE
 output_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. WWF_CALIBRATION\03. CALIB_REPORT\Version_43"
@@ -26,6 +28,9 @@ map_folder = r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\07_CALIBRATION\02. W
 dfs0_folders = []
 dfs0_folders.append(r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\04_DATA\11.Dfs0\Non-PS")
 dfs0_folders.append(r"J:\SEWER_AREA_MODELS\FSA\02_MODEL_COMPONENTS\04_DATA\11.Dfs0\PS")
+
+
+## ------ Below is for other sewer areas. Leave these commented out
 
 # model_area = "VSA"
 # generate_confidence_csvs = True

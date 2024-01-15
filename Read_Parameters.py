@@ -143,11 +143,11 @@ def main(working_folder,mu_path,use_accumulation):
         sql += "Avg(msm_HParRDII.GwLmin) AS AvgOfGwLmin, "
         sql += "Avg(msm_HParRDII.GWLbf0) AS AvgOfGWLbf0, Avg(msm_HParRDII.GWLfl1) AS AvgOfGWLfl1, "
         sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo=1 THEN 1 ELSE 0 END) AS CountSan, Sum(CASE WHEN msm_Catchment.NetTypeNo>2 THEN 1 ELSE 0 END) AS CountComb, "
-        sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo=2 THEN 1 ELSE 0 END) AS CountStorm, Count(msm_Catchment.MUID) AS CountAll, Sum(CASE WHEN msm_Catchment.NetTypeNo=1 THEN msm_Catchment.Area ELSE 0 END) AS AreaSan, "
-        sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo>2 THEN msm_Catchment.Area ELSE 0 END) AS AreaComb, Sum(CASE WHEN msm_Catchment.NetTypeNo=2 THEN msm_Catchment.Area ELSE 0 END) AS AreaStorm, "
-        sql += "Sum(msm_Catchment.Area) AS AreaAll, Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/100) AS AreaRDII, Sum(msm_Catchment.modelbaisteep*msm_Catchment.Area/100) AS AreaSteep, "
+        sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo=2 THEN 1 ELSE 0 END) AS CountStorm, Count(msm_Catchment.MUID) AS CountAll, Sum(CASE WHEN msm_Catchment.NetTypeNo=1 THEN msm_Catchment.Area/10000 ELSE 0 END) AS AreaSan, "
+        sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo>2 THEN msm_Catchment.Area/10000 ELSE 0 END) AS AreaComb, Sum(CASE WHEN msm_Catchment.NetTypeNo=2 THEN msm_Catchment.Area/10000 ELSE 0 END) AS AreaStorm, "
+        sql += "Sum(msm_Catchment.Area)/10000 AS AreaAll, Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/100) AS AreaRDII, Sum(msm_Catchment.modelbaisteep*msm_Catchment.Area/100) AS AreaSteep, "
         sql += "Sum(msm_Catchment.modelbaiflat*msm_Catchment.Area/100) AS AreaFlat, "
-        sql += "Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/100 +msm_Catchment.modelbaisteep*msm_Catchment.Area/100 +msm_Catchment.modelbaiflat*msm_Catchment.Area/100) AS AreaHydrology, "
+        sql += "Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/100 +msm_Catchment.modelbaisteep*msm_Catchment.Area/100 + msm_Catchment.modelbaiflat*msm_Catchment.Area/100) AS AreaHydrology, "
         sql += "Avg(msm_Catchment.modelblength) AS AvgOfLength, Avg(msm_Catchment.modelbslope) AS AvgOfSlope "
         sql += "FROM (msm_Catchment INNER JOIN msm_HParRDII ON msm_Catchment.Location = msm_HParRDII.MUID) INNER JOIN Base_Hydrology_Settings ON msm_HParRDII.MUID = Base_Hydrology_Settings.Location "
         sql += "GROUP BY msm_Catchment.Location"
@@ -173,41 +173,17 @@ def main(working_folder,mu_path,use_accumulation):
         sqls.append(["SELECT LoadLocation, SUM(WaterLoad) AS Total FROM ms_LALoadAlloc GROUP BY LoadLocation ORDER BY LoadLocation",'WaterLoad'])
     else:
         sql = "SELECT LoadLocation, "
-        sql += "Avg(CASE WHEN loadcategory = 'Baseflow' THEN PerCapitaLoad END) AS Baseflow, "
-        sql += "Avg(CASE WHEN loadcategory = 'Commercial' THEN PerCapitaLoad END) AS Commercial, "
-        sql += "Avg(CASE WHEN loadcategory = 'Industrial' THEN PerCapitaLoad END) AS Industrial, "
-        sql += "Avg(CASE WHEN loadcategory = 'Institutional' THEN PerCapitaLoad END) AS Institutional, "
-        sql += "Avg(CASE WHEN loadcategory = 'Load_10' THEN PerCapitaLoad END) AS Load_10, "
-        sql += "Avg(CASE WHEN loadcategory = 'Load_8' THEN PerCapitaLoad END) AS Load_8, "
-        sql += "Avg(CASE WHEN loadcategory = 'Load_9' THEN PerCapitaLoad END) AS Load_9, "
+        sql += "Avg(CASE WHEN loadcategory = 'Commercial' THEN PerAreaLoad END) AS Commercial, "
+        sql += "Avg(CASE WHEN loadcategory = 'Industrial' THEN PerAreaLoad END) AS Industrial, "
+        sql += "Avg(CASE WHEN loadcategory = 'Institutional' THEN PerAreaLoad END) AS Institutional, "
         sql += "Avg(CASE WHEN loadcategory = 'Mixed' THEN PerCapitaLoad END) AS Mixed, "
         sql += "Avg(CASE WHEN loadcategory = 'ResHD' THEN PerCapitaLoad END) AS ResHD, "
         sql += "Avg(CASE WHEN loadcategory = 'ResLD' THEN PerCapitaLoad END) AS ResLD "
         sql += "FROM msm_LoadPoint GROUP BY LoadLocation"
         sqls.append([sql,'Rate'])
 
-        sql = "SELECT LoadLocation, "
-        sql += "Avg(CASE WHEN loadcategory = 'Baseflow' THEN PerAreaLoad END) AS Baseflow, "
-        sql += "Avg(CASE WHEN loadcategory = 'Commercial' THEN PerAreaLoad END) AS Commercial, "
-        sql += "Avg(CASE WHEN loadcategory = 'Industrial' THEN PerAreaLoad END) AS Industrial, "
-        sql += "Avg(CASE WHEN loadcategory = 'Institutional' THEN PerAreaLoad END) AS Institutional, "
-        sql += "Avg(CASE WHEN loadcategory = 'Load_10' THEN PerAreaLoad END) AS Load_10, "
-        sql += "Avg(CASE WHEN loadcategory = 'Load_8' THEN PerAreaLoad END) AS Load_8, "
-        sql += "Avg(CASE WHEN loadcategory = 'Load_9' THEN PerAreaLoad END) AS Load_9, "
-        sql += "Avg(CASE WHEN loadcategory = 'Mixed' THEN PerAreaLoad END) AS Mixed, "
-        sql += "Avg(CASE WHEN loadcategory = 'ResHD' THEN PerAreaLoad END) AS ResHD, "
-        sql += "Avg(CASE WHEN loadcategory = 'ResLD' THEN PerAreaLoad END) AS ResLD "
-        sql += "FROM msm_LoadPoint GROUP BY LoadLocation"
-        sqls.append([sql,'LoadCategory'])
 
         sql = "SELECT LoadLocation, "
-        sql += "SUM(CASE WHEN loadcategory = 'Baseflow' THEN Population END) AS Baseflow, "
-        sql += "SUM(CASE WHEN loadcategory = 'Commercial' THEN Population END) AS Commercial, "
-        sql += "SUM(CASE WHEN loadcategory = 'Industrial' THEN Population END) AS Industrial, "
-        sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN Population END) AS Institutional, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_10' THEN Population END) AS Load_10, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_8' THEN Population END) AS Load_8, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_9' THEN Population END) AS Load_9, "
         sql += "SUM(CASE WHEN loadcategory = 'Mixed' THEN Population END) AS Mixed, "
         sql += "SUM(CASE WHEN loadcategory = 'ResHD' THEN Population END) AS ResHD, "
         sql += "SUM(CASE WHEN loadcategory = 'ResLD' THEN Population END) AS ResLD "
@@ -215,16 +191,9 @@ def main(working_folder,mu_path,use_accumulation):
         sqls.append([sql,'Population'])
 
         sql = "SELECT LoadLocation, "
-        sql += "SUM(CASE WHEN loadcategory = 'Baseflow' THEN ICIArea END) AS Baseflow, "
         sql += "SUM(CASE WHEN loadcategory = 'Commercial' THEN ICIArea END) AS Commercial, "
         sql += "SUM(CASE WHEN loadcategory = 'Industrial' THEN ICIArea END) AS Industrial, "
-        sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN ICIArea END) AS Institutional, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_10' THEN ICIArea END) AS Load_10, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_8' THEN ICIArea END) AS Load_8, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_9' THEN ICIArea END) AS Load_9, "
-        sql += "SUM(CASE WHEN loadcategory = 'Mixed' THEN ICIArea END) AS Mixed, "
-        sql += "SUM(CASE WHEN loadcategory = 'ResHD' THEN ICIArea END) AS ResHD, "
-        sql += "SUM(CASE WHEN loadcategory = 'ResLD' THEN ICIArea END) AS ResLD "
+        sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN ICIArea END) AS Institutional "
         sql += "FROM msm_LoadPoint GROUP BY LoadLocation"
         sqls.append([sql,'Area'])
 
@@ -279,13 +248,6 @@ def main(working_folder,mu_path,use_accumulation):
             sqls.append([sql,'WaterLoad_Upstream'])
         else:
             sql = "SELECT Downstream, "
-            sql += " SUM(CASE WHEN loadcategory = 'Baseflow' THEN Population END) AS Baseflow, "
-            sql += " SUM(CASE WHEN loadcategory = 'Commercial' THEN Population END) AS Commercial, "
-            sql += " SUM(CASE WHEN loadcategory = 'Industrial' THEN Population END) AS Industrial, "
-            sql += " SUM(CASE WHEN loadcategory = 'Institutional' THEN Population END) AS Institutional, "
-            sql += " SUM(CASE WHEN loadcategory = 'Load_10' THEN Population END) AS Load_10, "
-            sql += " SUM(CASE WHEN loadcategory = 'Load_8' THEN Population END) AS Load_8, "
-            sql += " SUM(CASE WHEN loadcategory = 'Load_9' THEN Population END) AS Load_9, "
             sql += " SUM(CASE WHEN loadcategory = 'Mixed' THEN Population END) AS Mixed, "
             sql += " SUM(CASE WHEN loadcategory = 'ResHD' THEN Population END) AS ResHD, "
             sql += " SUM(CASE WHEN loadcategory = 'ResLD' THEN Population END) AS ResLD "
@@ -294,16 +256,9 @@ def main(working_folder,mu_path,use_accumulation):
             sqls.append([sql,'Population_Upstream'])
 
             sql = "SELECT Downstream, "
-            sql += " SUM(CASE WHEN loadcategory = 'Baseflow' THEN ICIArea END) AS Baseflow, "
             sql += " SUM(CASE WHEN loadcategory = 'Commercial' THEN ICIArea END) AS Commercial, "
             sql += " SUM(CASE WHEN loadcategory = 'Industrial' THEN ICIArea END) AS Industrial, "
-            sql += " SUM(CASE WHEN loadcategory = 'Institutional' THEN ICIArea END) AS Institutional, "
-            sql += " SUM(CASE WHEN loadcategory = 'Load_10' THEN ICIArea END) AS Load_10, "
-            sql += " SUM(CASE WHEN loadcategory = 'Load_8' THEN ICIArea END) AS Load_8, "
-            sql += " SUM(CASE WHEN loadcategory = 'Load_9' THEN ICIArea END) AS Load_9, "
-            sql += " SUM(CASE WHEN loadcategory = 'Mixed' THEN ICIArea END) AS Mixed, "
-            sql += " SUM(CASE WHEN loadcategory = 'ResHD' THEN ICIArea END) AS ResHD, "
-            sql += " SUM(CASE WHEN loadcategory = 'ResLD' THEN ICIArea END) AS ResLD "
+            sql += " SUM(CASE WHEN loadcategory = 'Institutional' THEN ICIArea END) AS Institutional "
             sql += " FROM Accumulation INNER JOIN msm_LoadPoint ON Accumulation.Upstream = msm_LoadPoint.LoadLocation "
             sql += " GROUP BY Accumulation.Downstream"
             sqls.append([sql,'Area_Upstream'])
@@ -350,9 +305,7 @@ def main(working_folder,mu_path,use_accumulation):
         else:
             dwf_df_all = pd.merge(dwf_df_all,dwf_df,how='left',on='Zone')
 
-
     a = list(dwf_df_all.columns)
-
 
     for dwf_column in dwf_columns:
         dwf_column_lower = dwf_column.lower()
@@ -364,20 +317,22 @@ def main(working_folder,mu_path,use_accumulation):
     dwf_df_all = dwf_df_all[dwf_columns]
     dwf_df_all.to_csv(working_folder + '\\DWF_Specs.csv',index=False)
 
-
     if '.mdb' in mu_path:
         sql = "SELECT ms_LALoadAlloc.LoadLocation, ms_DPProfileD.PatternID, ms_DPProfileD.ScheduleID, ms_DPPatternD.Sqn, ms_DPPatternD.DPValue "
         sql += "FROM ms_LALoadAlloc INNER JOIN ((msm_BItem INNER JOIN ms_DPProfileD ON msm_BItem.DPProfileID = ms_DPProfileD.ProfileID)  "
         sql += "INNER JOIN ms_DPPatternD ON ms_DPProfileD.PatternID = ms_DPPatternD.PatternID) ON ms_LALoadAlloc.LoadSubCategory = msm_BItem.MUID "
         sql += "GROUP BY ms_LALoadAlloc.LoadLocation, ms_DPProfileD.PatternID, ms_DPProfileD.ScheduleID, ms_DPPatternD.Sqn, ms_DPPatternD.DPValue "
         sql += "HAVING ms_DPProfileD.PatternID<>'Baseflow'"
+    else:
+        sql = "SELECT msm_loadpoint.LoadLocation, ms_DPProfileD.PatternID, ms_DPProfileD.ScheduleID, ms_DPPatternD.Sqn, ms_DPPatternD.DPValue "
+        sql += "FROM msm_loadpoint INNER JOIN ((msm_BBoundary INNER JOIN ms_DPProfileD ON msm_BBoundary.DPProfileID = ms_DPProfileD.ProfileID)  "
+        sql += "INNER JOIN ms_DPPatternD ON ms_DPProfileD.PatternID = ms_DPPatternD.PatternID) ON msm_loadpoint.LoadSubCategory = msm_BBoundary.MUID "
+        sql += "GROUP BY msm_loadpoint.LoadLocation, ms_DPProfileD.PatternID, ms_DPProfileD.ScheduleID, ms_DPPatternD.Sqn, ms_DPPatternD.DPValue "
+        sql += "HAVING ms_DPProfileD.PatternID<>'Baseflow'"
 
     diurnals = readQuery(sql,mu_path)[1]
     diurnals = pd.DataFrame(diurnals,columns=['Zone','Profile','Schedule','Sqn','Multiplier'])
     diurnals.to_csv(working_folder + '\\Diurnals.csv',index=False)
-
-
-
 
 if __name__ == "__main__":
     print sys.argv[3]

@@ -1,1 +1,1 @@
-"Read_Parameters.py" "C:\Users\hloecke\Calibration" "J:\SEWER_AREA_MODELS\LISA\01_MASTER_MODEL\Lisa_Base.sqlite" True
+C:\Python27\ArcGIS10.7\python.exe "Read_Parameters.py" "C:\Users\hloecke\Calibration" "\\prdsynfile01\lws_modelling\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\Model_WWF_Calibration_Full_Package\FSA_Base_2021pop_V140_Step1.sqlite" True

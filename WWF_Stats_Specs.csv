@@ -1,0 +1,28 @@
+Description,DF,DF_Col,Unit,Table,Decimals
+Accumulated rainfall ,,,mm,1,1
+Drainage area ,wwf_specs,Drainage area (ha),ha,1,1
+Number sanitary,wwf_specs,Number sanitary,-,1,0
+Number combined,wwf_specs,Number combined,-,1,0
+Number stormwater,wwf_specs,Number stormwater,-,1,0
+Area sanitary ,wwf_specs,Area sanitary (ha),ha,1,1
+Area combined ,wwf_specs,Area combined (ha),ha,1,1
+Area stormwater ,wwf_specs,Area stormwater (ha),ha,1,1
+Flat impervious area ,wwf_specs,Flat Impervious area (ha),ha,2,1
+Steep impervious area ,wwf_specs,Steep Impervious area (ha),ha,2,1
+Impervious cal. factor ICF,wwf_specs,Imp. cal. factor ICF,-,2,3
+Impervious san. factor ISF,wwf_specs,Imp. san. factor ISF,-,2,3
+RDII factor RF,wwf_specs,RDII Factor RF,-,2,3
+Length factor LF,wwf_specs,Length factor LF,-,2,3
+Slope factor SF,wwf_specs,Slope factor SF,-,2,3
+Average length,wwf_specs,Average Length (m),m,2,0
+Average slope,wwf_specs,Average slope (m/m),m/m,2,4
+RDII Area ,wwf_specs,RDII Area (ha),ha,3,1
+Surface Storage Umax ,wwf_specs,Umax (mm),mm,3,0
+Root zone storage Lmax ,wwf_specs,Lmax (mm),mm,3,0
+Overland coefficient CQOF,wwf_specs,Overland coeff. Cqof,-,3,2
+TC overland flow CK,wwf_specs,TC overland flow (h),h,3,0
+TC interflow Ckif,wwf_specs,TC interflow (h),h,3,0
+TC baseflow BF,wwf_specs,TC baseflow (h),h,3,0
+Threshold overland flow Tof,wwf_specs,Threshold overland flow,-,3,1
+Threshold interflow Tif,wwf_specs,Threshold interflow,-,3,1
+Threshold GW flow Tg,wwf_specs,Threshold GW flow,-,3,1

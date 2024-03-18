@@ -42,7 +42,7 @@ def readQuery(SQL, fullPath):
 
 working_folder = os.getcwd()
 use_accumulation = True
-mu_path = r"J:\SEWER_AREA_MODELS\FSA\03_SIMULATION_WORK\Calibration_2022\MODEL\FSA_Base_2021pop_New_Zones.mdb"
+mu_path = r"L:\Temporary Shared\yao\FSA_Base_2021pop_V140_Step2.sqlite"
 
 
 def main(working_folder,mu_path,use_accumulation):
@@ -145,9 +145,9 @@ def main(working_folder,mu_path,use_accumulation):
         sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo=1 THEN 1 ELSE 0 END) AS CountSan, Sum(CASE WHEN msm_Catchment.NetTypeNo>2 THEN 1 ELSE 0 END) AS CountComb, "
         sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo=2 THEN 1 ELSE 0 END) AS CountStorm, Count(msm_Catchment.MUID) AS CountAll, Sum(CASE WHEN msm_Catchment.NetTypeNo=1 THEN msm_Catchment.Area/10000 ELSE 0 END) AS AreaSan, "
         sql += "Sum(CASE WHEN msm_Catchment.NetTypeNo>2 THEN msm_Catchment.Area/10000 ELSE 0 END) AS AreaComb, Sum(CASE WHEN msm_Catchment.NetTypeNo=2 THEN msm_Catchment.Area/10000 ELSE 0 END) AS AreaStorm, "
-        sql += "Sum(msm_Catchment.Area)/10000 AS AreaAll, Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/100) AS AreaRDII, Sum(msm_Catchment.modelbaisteep*msm_Catchment.Area/100) AS AreaSteep, "
-        sql += "Sum(msm_Catchment.modelbaiflat*msm_Catchment.Area/100) AS AreaFlat, "
-        sql += "Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/100 +msm_Catchment.modelbaisteep*msm_Catchment.Area/100 + msm_Catchment.modelbaiflat*msm_Catchment.Area/100) AS AreaHydrology, "
+        sql += "Sum(msm_Catchment.Area)/10000 AS AreaAll, Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/10000) AS AreaRDII, Sum(msm_Catchment.modelbaisteep*msm_Catchment.Area/10000) AS AreaSteep, "
+        sql += "Sum(msm_Catchment.modelbaiflat*msm_Catchment.Area/10000) AS AreaFlat, "
+        sql += "Sum(msm_Catchment.RdiiArea*msm_Catchment.Area/10000 +msm_Catchment.modelbaisteep*msm_Catchment.Area/10000 + msm_Catchment.modelbaiflat*msm_Catchment.Area/100) AS AreaHydrology, "
         sql += "Avg(msm_Catchment.modelblength) AS AvgOfLength, Avg(msm_Catchment.modelbslope) AS AvgOfSlope "
         sql += "FROM (msm_Catchment INNER JOIN msm_HParRDII ON msm_Catchment.Location = msm_HParRDII.MUID) INNER JOIN Base_Hydrology_Settings ON msm_HParRDII.MUID = Base_Hydrology_Settings.Location "
         sql += "GROUP BY msm_Catchment.Location"

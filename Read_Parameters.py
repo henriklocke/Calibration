@@ -1,5 +1,5 @@
 
-#Updated 2024-06-12
+#Updated 2024-12-02
 import pypyodbc #used to run Access queries
 
 import arcpy
@@ -202,21 +202,21 @@ def main(working_folder,mu_path,use_accumulation):
         sqls.append([sql,'Area'])
 
         sql = "SELECT LoadLocation, "
-        sql += "SUM(CASE WHEN loadcategory = 'Baseflow' THEN loadflow END)*100000 AS Baseflow, "
-        sql += "SUM(CASE WHEN loadcategory = 'Commercial' THEN loadflow END)*100000 AS Commercial, "
-        sql += "SUM(CASE WHEN loadcategory = 'Industrial' THEN loadflow END)*100000 AS Industrial, "
-        sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN loadflow END)*100000 AS Institutional, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_10' THEN loadflow END)*100000 AS Load_10, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_8' THEN loadflow END)*100000 AS Load_8, "
-        sql += "SUM(CASE WHEN loadcategory = 'Load_9' THEN loadflow END)*100000 AS Load_9, "
-        sql += "SUM(CASE WHEN loadcategory = 'Mixed' THEN loadflow END)*100000 AS Mixed, "
-        sql += "SUM(CASE WHEN loadcategory = 'ResHD' THEN loadflow END)*100000 AS ResHD, "
-        sql += "SUM(CASE WHEN loadcategory = 'ResLD' THEN loadflow END)*100000 AS ResLD "
+        sql += "SUM(CASE WHEN loadcategory = 'Baseflow' THEN loadflow END)*86400 AS Baseflow, "
+        sql += "SUM(CASE WHEN loadcategory = 'Commercial' THEN loadflow END)*86400 AS Commercial, "
+        sql += "SUM(CASE WHEN loadcategory = 'Industrial' THEN loadflow END)*86400 AS Industrial, "
+        sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN loadflow END)*86400 AS Institutional, "
+        sql += "SUM(CASE WHEN loadcategory = 'Load_10' THEN loadflow END)*86400 AS Load_10, "
+        sql += "SUM(CASE WHEN loadcategory = 'Load_8' THEN loadflow END)*86400 AS Load_8, "
+        sql += "SUM(CASE WHEN loadcategory = 'Load_9' THEN loadflow END)*86400 AS Load_9, "
+        sql += "SUM(CASE WHEN loadcategory = 'Mixed' THEN loadflow END)*86400 AS Mixed, "
+        sql += "SUM(CASE WHEN loadcategory = 'ResHD' THEN loadflow END)*86400 AS ResHD, "
+        sql += "SUM(CASE WHEN loadcategory = 'ResLD' THEN loadflow END)*86400 AS ResLD "
         sql += "FROM msm_LoadPoint WHERE msm_Loadpoint.active = 1 "
         sql += "GROUP BY LoadLocation"
         sqls.append([sql,'WaterLoad'])
 
-        sql = "SELECT LoadLocation, SUM (loadflow)*100000 AS Total FROM msm_LoadPoint WHERE active = 1 GROUP BY LoadLocation"
+        sql = "SELECT LoadLocation, SUM (loadflow)*86400 AS Total FROM msm_LoadPoint WHERE active = 1 GROUP BY LoadLocation"
         sqls.append([sql,'WaterLoad'])
 
     if use_accumulation == True or use_accumulation == 'True': #Bat file seems to parse it in as string
@@ -271,22 +271,22 @@ def main(working_folder,mu_path,use_accumulation):
             sqls.append([sql,'Area_Upstream'])
 
             sql = "SELECT Downstream, "
-            sql += "SUM(CASE WHEN loadcategory = 'Baseflow' THEN loadflow END)*100000 AS Baseflow, "
-            sql += "SUM(CASE WHEN loadcategory = 'Commercial' THEN loadflow END)*100000 AS Commercial, "
-            sql += "SUM(CASE WHEN loadcategory = 'Industrial' THEN loadflow END)*100000 AS Industrial, "
-            sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN loadflow END)*100000 AS Institutional, "
-            sql += "SUM(CASE WHEN loadcategory = 'Load_10' THEN loadflow END)*100000 AS Load_10, "
-            sql += "SUM(CASE WHEN loadcategory = 'Load_8' THEN loadflow END)*100000 AS Load_8, "
-            sql += "SUM(CASE WHEN loadcategory = 'Load_9' THEN loadflow END)*100000 AS Load_9, "
-            sql += "SUM(CASE WHEN loadcategory = 'Mixed' THEN loadflow END)*100000 AS Mixed, "
-            sql += "SUM(CASE WHEN loadcategory = 'ResHD' THEN loadflow END)*100000 AS ResHD, "
-            sql += "SUM(CASE WHEN loadcategory = 'ResLD' THEN loadflow END)*100000 AS ResLD "
+            sql += "SUM(CASE WHEN loadcategory = 'Baseflow' THEN loadflow END)*86400 AS Baseflow, "
+            sql += "SUM(CASE WHEN loadcategory = 'Commercial' THEN loadflow END)*86400 AS Commercial, "
+            sql += "SUM(CASE WHEN loadcategory = 'Industrial' THEN loadflow END)*86400 AS Industrial, "
+            sql += "SUM(CASE WHEN loadcategory = 'Institutional' THEN loadflow END)*86400 AS Institutional, "
+            sql += "SUM(CASE WHEN loadcategory = 'Load_10' THEN loadflow END)*86400 AS Load_10, "
+            sql += "SUM(CASE WHEN loadcategory = 'Load_8' THEN loadflow END)*86400 AS Load_8, "
+            sql += "SUM(CASE WHEN loadcategory = 'Load_9' THEN loadflow END)*86400 AS Load_9, "
+            sql += "SUM(CASE WHEN loadcategory = 'Mixed' THEN loadflow END)*86400 AS Mixed, "
+            sql += "SUM(CASE WHEN loadcategory = 'ResHD' THEN loadflow END)*86400 AS ResHD, "
+            sql += "SUM(CASE WHEN loadcategory = 'ResLD' THEN loadflow END)*86400 AS ResLD "
             sql += "FROM Accumulation INNER JOIN msm_LoadPoint ON Accumulation.Upstream = msm_LoadPoint.LoadLocation "
             sql += "WHERE msm_Loadpoint.active = 1 "
             sql += "GROUP BY Accumulation.Downstream"
             sqls.append([sql,'WaterLoad_Upstream'])
 
-            sql = "SELECT Downstream, SUM(loadflow)*100000 AS Total "
+            sql = "SELECT Downstream, SUM(loadflow)*86400 AS Total "
             sql += "FROM msm_LoadPoint INNER JOIN Accumulation ON msm_LoadPoint.LoadLocation = Accumulation.Upstream "
             sql += "WHERE msm_Loadpoint.active = 1 "
             sql += "GROUP BY Accumulation.Downstream"
